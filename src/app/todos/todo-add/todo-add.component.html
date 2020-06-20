@@ -1,0 +1,12 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="titulo">Titulo:</label>
+    <input 
+    [ngClass]="{'is-invalid': !form.controls.titulo.valid && form.controls.titulo.touched,'is-valid':form.controls.titulo.valid}"
+    type="text" class="form-control" id="titulo" name="titulo" formControlName = "titulo">
+    <div *ngIf="form.controls.titulo.errors?.required" class="invalid-feedback">
+      El titulo es requerido.
+    </div>
+  </div>
+  <button type="submit" class="btn btn-outline-primary">Añadir tarea</button>
+</form>

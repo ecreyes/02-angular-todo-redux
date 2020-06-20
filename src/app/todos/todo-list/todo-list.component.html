@@ -1,0 +1,67 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre tarea</th>
+      <th scope="col">Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let todo of todos;let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>
+        <p [ngStyle]="{'text-decoration':todo.estado? 'line-through':''}">{{todo.titulo}}</p>
+      </td>
+      <td>
+        <div class="row">
+          <div class="col-12">
+            <button *ngIf="!todo.estado" class="btn btn-outline-success btn-sm"
+              (click)=(completar(todo.id))>Completar</button>
+            <button data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-info btn-sm"
+              (click)="seleccionar(todo)">Editar</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="eliminar(todo.id)">Eliminar</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar todo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="titulo">Titulo</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" formControlName = "titulo">
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="complete" name="estado" formControlName = "estado" [value]="true">
+            <label class="form-check-label" for="complete">
+              Completado
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" id="nocomplete"  name="estado" formControlName = "estado" [value]="false">
+            <label class="form-check-label" for="nocomplete">
+              No completado
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Cerrar</button>
+            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
