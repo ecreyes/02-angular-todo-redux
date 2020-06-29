@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as actions from "../todos.actions";
+import {filtrosValidos} from "../../filtro/filtro.actions";
 
 @Component({
   selector: 'app-todo-list',
@@ -18,6 +19,7 @@ export class TodoListComponent implements OnInit {
   form:FormGroup;
   todo:Todo = {id:"",titulo:"",estado:false};
   todos:Todo[] = [];
+  select:filtrosValidos;
 
   constructor(private store:Store<AppState>) { 
     this.form = new FormGroup({
@@ -29,6 +31,7 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
     //this.store.select("todos").subscribe(todos=>this.todos=todos);
     this.store.subscribe(({todos})=>this.todos=todos);
+    this.store.subscribe(({filtro})=>this.select=filtro);
   }
 
   seleccionar(todo){
